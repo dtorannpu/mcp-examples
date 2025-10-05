@@ -2,11 +2,11 @@ package main
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 
 	"github.com/rs/zerolog/log"
 
+	"github.com/go-viper/mapstructure/v2"
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 )
 
@@ -40,13 +40,10 @@ func main() {
 		log.Fatal().Msg("error calling tool")
 	}
 
-	jsonBytes, err := json.Marshal(res.StructuredContent)
-	if err != nil {
-		log.Fatal().Err(err).Msg("failed to marshal structured content")
-	}
 	var output Output
-	if err := json.Unmarshal(jsonBytes, &output); err != nil {
-		log.Fatal().Err(err).Msg("failed to unmarshal structured content")
+	err = mapstructure.Decode(res.StructuredContent, &output)
+	if err != nil {
+		log.Fatal().Err(err).Msg("failed to decode response")
 	}
 	fmt.Println(output.Greeting)
 }

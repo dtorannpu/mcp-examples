@@ -3,6 +3,7 @@ module go-mcp-sample
 go 1.25
 
 require (
+	github.com/go-viper/mapstructure/v2 v2.4.0
 	github.com/modelcontextprotocol/go-sdk v1.0.0
 	github.com/rs/zerolog v1.34.0
 )
